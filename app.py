@@ -1,30 +1,29 @@
 ﻿import streamlit as st
 import pandas as pd
-from ali_scraper import scrape_aliexpress_products
+from ali_scraper import AliExpressScraper
 
-st.set_page_config(page_title="AliExpress Scraper")
-st.title("Scraper AliExpress (Selenium)")
+# Titre de l'application
+st.set_page_config(page_title="AliExpress Scraper", layout="wide")
+st.title("🛒 AliExpress Scraper")
 
-ali_url = st.text_input("URL de recherche AliExpress", placeholder="https://fr.aliexpress.com/w/wholesale-nogi.html")
+# Paramètres utilisateur
+query = st.text_input("🔍 Terme de recherche", value="Entrée votre recherche")
+max_items = st.slider("🔢 Nombre max de produits à extraire", min_value=10, max_value=100, value=20)
 
-if st.button("Scraper AliExpress"):
-    if not ali_url:
-        st.warning("Veuillez entrer une URL valide.")
+# Bouton pour lancer le scraping
+if st.button("🚀 Lancer le scraping"):
+    scraper = AliExpressScraper()
+    with st.spinner("⏳ Scraping en cours..."):
+        
+        results = scraper.scrape(query, max_items=max_items)
+
+    if results:
+        df = pd.DataFrame(results)
+        st.success(f"✅ {len(results)} produits récupérés !")
+        st.dataframe(df)
     else:
-        with st.spinner("Scraping en cours..."):
-            try:
-                data = scrape_aliexpress_products(ali_url, max_items=50)
+        st.warning("⚠️ Aucun produit trouvé. Vérifie ta requête ou réessaye.")
 
-                # 🔍 DEBUG : voir la sortie brute
-                st.subheader("Données brutes retournées")
-                st.write(data)
-
-                if not data:
-                    st.warning("Aucun produit détecté.")
-                else:
-                    df = pd.DataFrame(data)
-                    st.success(f"{len(df)} produits trouvés")
-                    st.dataframe(df)
-                    st.download_button("Télécharger CSV", df.to_csv(index=False).encode("utf-8"), "produits.csv", "text/csv")
-            except Exception as e:
-                st.error(f"Erreur : {e}")
+# Info footer
+st.markdown("---")
+st.caption("Développé avec ❤️ par ton scraper personnalisé.")
