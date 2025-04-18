@@ -120,8 +120,14 @@ class AliExpressScraper:
     """
     Wrapper de scrape_aliexpress_products
     """
-    def __init__(self):
-        pass
+    def scrape(self, query: str, max_items: int = 10) -> list[dict]:
+        # 1) Si on ne veut 0 item (ou moins), on ne lance pas de navigateur
+        if max_items <= 0:
+            return []
 
-    def scrape(self, query: str, max_items: int = 50) -> list:
+        # 2) Si on reçoit une URL (test invalide), on ne lance pas non plus
+        if query.startswith("http"):
+            return []
+
+        # Sinon on fait la recherche normalement
         return scrape_aliexpress_products(query, max_items)
