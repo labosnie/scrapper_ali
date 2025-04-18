@@ -1,3 +1,5 @@
+![Tests](https://github.com/labosnie/scrapper_ali/actions/workflows/python-app.yml/badge.svg)
+
 # 🛍️ AliExpress Scraper avec Streamlit & Selenium
 
 Un scraper web simple et efficace pour extraire les titres, prix et liens de produits depuis les pages de recherche AliExpress.  
@@ -40,3 +42,4 @@ venv\Scripts\activate   # ou source venv/bin/activate sur Mac/Linux
 pip install -r requirements.txt
 
 streamlit run app.py
+```
