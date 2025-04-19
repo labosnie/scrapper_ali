@@ -4,10 +4,13 @@ Une application simple pour scraper les titres, prix et liens de produits sur un
 
 ## 🚀 Fonctionnalités
 
-- 🕵️‍♂️ Scrape automatique d'une URL de recherche AliExpress
-- 📝 Affichage des résultats dans un tableau interactif
-- 📥 Export CSV des résultats
-
+- Recherche par mot‑clé ou URL
+- Pagination automatique jusqu’à un nombre d’items défini
+- Configuration headless, proxy, user‑agent et timeout via `.env`
+- Interface CLI simple (Typer) pour lancer une commande unique
+- Export des résultats au format CSV
+- Structure testable avec `pytest`
+- Container Docker prêt à l’emploi
 
 ## 🛠️ Tech Stack
 
